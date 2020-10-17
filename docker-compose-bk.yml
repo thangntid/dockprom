@@ -131,24 +131,3 @@ services:
       - monitor-net
     labels:
       org.label-schema.group: "monitoring"
-
-  alertmanager-bot:
-    image: metalmatze/alertmanager-bot:0.4.2
-    container_name: alertmanager-bot
-    environment:
-      ALERTMANAGER_URL: http://alertmanager:9093
-      BOLT_PATH: /data/bot.db
-      STORE: bolt
-      TELEGRAM_ADMIN: "266063533"
-      TELEGRAM_TOKEN: 272932121:AAE6UoWsdeO2CRfxqC67Uitcqo33g_T1bac
-      TEMPLATE_PATHS: /templates/default.tmpl
-    ports:
-      - "8081:8080"
-    restart: always
-    volumes:
-      - ./alertmanager-bot/data:/data
-      - ./alertmanager-bot/templates:/templates
-    networks:
-      - monitor-net
-    labels:
-      org.label-schema.group: "monitoring"
