@@ -1,11 +1,12 @@
 route:
-    receiver: 'slack'
-
+  receiver: 'alertmananger-bot'
+  routes:
+    - receiver: 'alertmananger-bot'
+      group_wait: 30s
+      repeat_interval: 24h
+      group_interval: 10s
 receivers:
-    - name: 'slack'
-      slack_configs:
-          - send_resolved: true
-            text: "{{ .CommonAnnotations.description }}"
-            username: 'Prometheus'
-            channel: '#<channel-name>'
-            api_url: 'https://hooks.slack.com/services/<webhook-id>'
+- name: 'alertmananger-bot'
+  webhook_configs:
+  - send_resolved: true
+    url: 'http://alertmanager-bot:8080'
