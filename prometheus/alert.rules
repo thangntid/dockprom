@@ -12,14 +12,14 @@ groups:
 
 - name: host
   rules:
-  #- alert: HighCpuLoad
-    #expr: node_load1 > 1.5
-    #for: 30s
-    #labels:
-      #severity: warning
-    #annotations:
-      #summary: "Server under high load"
-      #description: "Docker host is under high load, the avg load 1m is at {{ $value}}. Reported by instance {{ $labels.instance }} of job {{ $labels.job }}."
+  # - alert: HighCpuLoad
+  #   expr: node_load1 > 1.5
+  #   for: 30s
+  #   labels:
+  #     severity: warning
+  #   annotations:
+  #     summary: "Server under high load"
+  #     description: "Docker host is under high load, the avg load 1m is at {{ $value}}. Reported by instance {{ $labels.instance }} of job {{ $labels.job }}."
 
   - alert: HostHighCpuLoad
     expr: 100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
@@ -85,3 +85,21 @@ groups:
     annotations:
       summary: "Host out of disk space (instance {{ $labels.instance }})"
       description: "Disk is almost full (< 5% left)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+  - alert: HostUnusualNetworkThroughputIn
+    expr: sum by (instance) (irate(node_network_receive_bytes_total[2m])) / 1024 / 1024 > 100
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Host unusual network throughput in (instance {{ $labels.instance }})"
+      description: "Host network interfaces are probably receiving too much data (> 100 MB/s)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+
+  - alert: HostUnusualNetworkThroughputOut
+    expr: sum by (instance) (irate(node_network_transmit_bytes_total[2m])) / 1024 / 1024 > 100
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Host unusual network throughput out (instance {{ $labels.instance }})"
+      description: "Host network interfaces are probably sending too much data (> 100 MB/s)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
