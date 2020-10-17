@@ -87,7 +87,7 @@ groups:
       description: "Disk is almost full (< 5% left)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
 
   - alert: HostUnusualNetworkThroughputIn
-    expr: sum by (instance) (irate(node_network_receive_bytes_total[2m])) / 1024 / 1024 > 0.05
+    expr: sum by (instance) (irate(node_network_receive_bytes_total[2m])) / 1024 / 1024 > 100
     for: 5m
     labels:
       severity: warning
@@ -96,7 +96,7 @@ groups:
       description: "Host network interfaces are probably receiving too much data (> 100 MB/s)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
 
   - alert: HostUnusualNetworkThroughputOut
-    expr: sum by (instance) (irate(node_network_transmit_bytes_total[2m])) / 1024 / 1024 > 0.05
+    expr: sum by (instance) (irate(node_network_transmit_bytes_total[2m])) / 1024 / 1024 > 100
     for: 5m
     labels:
       severity: warning
