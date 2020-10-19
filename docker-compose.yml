@@ -139,7 +139,7 @@ services:
       ALERTMANAGER_URL: http://alertmanager:9093
       BOLT_PATH: /data/bot.db
       STORE: bolt
-      # TELEGRAM_ADMIN: "266063533"
+      TELEGRAM_ADMIN: "266063533"
       TELEGRAM_TOKEN: 1353014327:AAGQ-1-4qTWqxSQEmxZHPuOcuqwywhegVmg
       TEMPLATE_PATHS: /templates/default.tmpl
     ports:
